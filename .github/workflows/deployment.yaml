@@ -25,3 +25,6 @@ jobs:
             gcloud config set project multi-k8s-484820
             gcloud config set compute/zone us-central1
             gcloud container clusters get-credentials multi-k8s-cluster
+
+        - name: Verify kubectl
+          run: kubectl get nodes
