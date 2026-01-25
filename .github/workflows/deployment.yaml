@@ -1,0 +1,27 @@
+on:
+  push:
+    branches:
+      - master
+jobs:
+    build:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v4
+
+        - name: Authenticate to google cloud
+          uses: google-github-actions/auth@v2
+          with:
+            credentials_json : ${{ secrets.GCP_SA_KEY }}
+
+        - name: Setup google cloud SDK
+          uses: google-github-actions/setup-gcloud@v2
+
+        - name: Set up kubectl
+          uses: azure/setup-kubectl@v3 
+
+        - name: Configure GCP project and cluster
+          run: |
+            gcloud config set project multi-k8s-484820
+            gcloud config set compute/zone us-central1
+            gcloud container clusters get-credentials multi-k8s-cluster
