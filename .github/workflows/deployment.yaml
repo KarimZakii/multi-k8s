@@ -16,6 +16,9 @@ jobs:
 
         - name: Setup google cloud SDK
           uses: google-github-actions/setup-gcloud@v2
+          
+        - name: Configure kubectl to use GKE auth plugin
+          run: echo "USE_GKE_GCLOUD_AUTH_PLUGIN=True" >> $GITHUB_ENV
 
         - name: Set up kubectl
           uses: azure/setup-kubectl@v3 
