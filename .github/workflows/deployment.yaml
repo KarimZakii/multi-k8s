@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - master
+      - '*'
 jobs:
     build:
       runs-on: ubuntu-latest
@@ -43,7 +43,12 @@ jobs:
             password: ${{ secrets.DOCKERHUB_PASSWORD }}
         
         - name: build test image of react app
-          run: docker build -t stephengrider/react-test -f ./client/Dockerfile.dev ./client
+          run: docker build -t karimzaki98/react-test -f ./client/Dockerfile.dev ./client
 
         - name: Run test on the test image of react app
-          run: docker run -e CI=true stephengrider/react-test npm test
+          run: docker run -e CI=true karimzaki98/react-test npm test
+
+        - name: Deploy to production
+          if: github.ref == 'refs/heads/master'
+          run: bash ./deploy.sh
+          
