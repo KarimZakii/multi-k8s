@@ -5,6 +5,9 @@ on:
 jobs:
     build:
       runs-on: ubuntu-latest
+      env:
+        SHA: ${{ github.sha }}
+        CLOUDSDK_CORE_DISABLE_PROMPTS: 1
       steps:
         - name: Checkout
           uses: actions/checkout@v4
